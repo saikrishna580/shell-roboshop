@@ -8,7 +8,7 @@ DOMAIN_NAME="daw84s.store"
 
 for instance in ${INSTANCES[@]}
 do
-    INSTANCE_ID=$(aws ec2 run-instances --image-id ami-0220d79f3f480ecf5 --instance-type t2.micro --security-group-ids sg-01ea0ba910221b5e4 --tag-specifications "ResourceType=instance,Tags=[{Key=name,Value=$instance}]" --query "Instances[0].InstanceId" --output text)
+    INSTANCE_ID=$(aws ec2 run-instances --image-id ami-0220d79f3f480ecf5 --instance-type t3.micro --security-group-ids sg-01ea0ba910221b5e4 --tag-specifications "ResourceType=instance,Tags=[{Key=name,Value=$instance}]" --query "Instances[0].InstanceId" --output text)
     if [ $instance != "frontend" ]
     then
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
@@ -29,7 +29,7 @@ do
            ,"Type"             : "A"
            ,"TTL"              : 1
            ,"ResourceRecords"  : [{
-            "Value"         : "'$P'"
+               "Value"         : "'$P'"
           }]
         }
       }]
