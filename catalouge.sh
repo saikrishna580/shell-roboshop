@@ -48,6 +48,9 @@ VALIDATE $? "Creating roboshop system user"
 mkdir /app 
 VALIDATE $? " Creating app directory"
 
+chown -R roboshop:roboshop /app
+VALIDATE $? "Giving permission to app directory"
+
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading Catalouge"
 
