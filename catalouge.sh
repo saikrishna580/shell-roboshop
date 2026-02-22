@@ -48,29 +48,27 @@ VALIDATE $? "Creating roboshop system user"
 mkdir /app 
 VALIDATE $? " Creating app directory"
 
-chown -R roboshop:roboshop /app
-VALIDATE $? "Giving permission to app directory"
-
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading Catalouge"
 
-cd /app
-unzip /tmp/catalogue.zip" &>>$LOG_FILE
-VALIDATE $? "Unzipping catalouge"
+cd /app 
+unzip /tmp/catalogue.zip &>>$LOG_FILE
+VALIDATE $? "unzipping catalogue"
 
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing Dependencies"
 
-cp $SCRIPT_DIR/catalouge.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Copying catalouge service"
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "Copying catalogue service"
 
 systemctl daemon-reload &>>$LOG_FILE
-systemctl enable catalogue &>>$LOG_FILE 
+systemctl enable catalogue  &>>$LOG_FILE
 systemctl start catalogue
-VALIDATE $? "Starting Catalouge"
+VALIDATE $? "Starting Catalogue"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Installing Mongodb Client"
+VALIDATE $? "Installing MongoDB Client"
 
 mongosh --host mongodb.daw84s.store </app/db/master-data.js &>>$LOG_FILE
+VALIDATE $? "Loading data into MongoDB"
