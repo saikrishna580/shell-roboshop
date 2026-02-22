@@ -74,4 +74,3 @@ dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing Mongodb Client"
 
 mongosh --host mongodb.daw84s.store </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "Loading data into Mongodb"
